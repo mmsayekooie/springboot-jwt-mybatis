@@ -34,8 +34,8 @@ public interface UsersMapper {
     })
     List<Task> selectTasks(String userId);
 
-    @Select("select * from user where username=#{username} and password=#{password}")
-    User login(User user);
+    @Select("select * from user where username=#{userName} and password=#{password}")
+    User login(String userName,String password);
 
     @Insert("insert into task(subject,date) values(#{subject},#{date})")
     @SelectKey(statement = "SELECT lAST_iNSERT_ID()", keyProperty = "id", before = false, resultType = Integer.class)

@@ -19,21 +19,20 @@ public class UserController {
     private UsersMapper usersMapper;
 
 
-
-@GetMapping("/alltask/")
-public List<Task> getAllTask(User user){
-    user.getPassword();
-    return usersMapper.findAllTask(user.getUserName());
-}
+    @GetMapping("/alltask/")
+    public List<Task> getAllTask(User user) {
+        user.getPassword();
+        return usersMapper.findAllTask(user.getUserName());
+    }
 
     @GetMapping("/all")
-    public List<User> getAll(){
-       return usersMapper.findAll();
+    public List<User> getAll() {
+        return usersMapper.findAll();
     }
 
     @GetMapping("/update")
-    public List<User> updateUser(){
-        User user =new User();
+    public List<User> updateUser() {
+        User user = new User();
         user.setUserName("hasan");
         user.setPassword("258987");
         usersMapper.insert(user);
@@ -41,48 +40,42 @@ public List<Task> getAllTask(User user){
     }
 
     @GetMapping("/login")
-    public Map<String,Object> login(User user)
-    {
+    public Map<String, Object> login(String userName,String password) {
 
-        Map<String,Object> map=new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         try {
-            usersMapper.login(user);
-            map.put("msg","Login succeeded");
-            map.put("code","200");
+            usersMapper.login(userName,password);
+            map.put("msg", "Login succeeded");
+            map.put("code", "200");
 
-            Map<String,String> payload=new HashMap<>();
-            payload.put("name",user.getUserName());
-            String token= JwtUtils.getToken(payload);
-            map.put("token",token);
-        }
-        catch (Exception ex)
-        {
-            map.put("msg","Login failed");
+            Map<String, String> payload = new HashMap<>();
+            payload.put("name", userName);
+            String token = JwtUtils.getToken(payload);
+            map.put("token", token);
+        } catch (Exception ex) {
+            map.put("msg", "Login failed");
         }
 
         return map;
     }
 
     @PostMapping("/verify")
-    public  Map<String,String> verifyToken(String token)
-    {
-        Map<String, String> map=new HashMap<>();
+    public Map<String, String> verifyToken(String token) {
+        Map<String, String> map = new HashMap<>();
         try {
             DecodedJWT verify = JwtUtils.verify(token);
-            map.put("msg","Validation succeeded");
-            map.put("state","true");
+            map.put("msg", "Validation succeeded");
+            map.put("state", "true");
 
-        }
-        catch (Exception exception)
-        {
-            map.put("msg","Validation failed");
+        } catch (Exception exception) {
+            map.put("msg", "Validation failed");
             exception.printStackTrace();
         }
         return map;
     }
 
     @PostMapping("/saveTask")
-    public Task saveTask(Task task){
-    return usersMapper.saveTask(task);
+    public Task saveTask(Task task) {
+        return usersMapper.saveTask(task);
     }
 }

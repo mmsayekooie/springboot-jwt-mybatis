@@ -13,8 +13,8 @@ private UsersMapper usersMapper;
         this.usersMapper = usersMapper;
     }
 
-    public User login(User user) {
-        User userdb=usersMapper.login(user);
+    public User login(String userName,String password) {
+        User userdb=usersMapper.login(userName,password);
         if(userdb!=null)
         {
             Map<String,String> map=new HashMap<>();

@@ -4,10 +4,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
 import java.util.Map;
 
+@Component
 public class JwtUtils {
     //Authentication is equivalent to saving the private key on the server
     private  static  final String  secret="@@###$##$!@@%&";
