@@ -22,7 +22,7 @@ public interface UsersMapper {
     @Results(value = {
             @Result(property="id", column = "id"),
             @Result(property="username", column = "username"),
-            @Result(property="user", column="id", javaType= List.class, many=@Many(select="selectTasks"))
+            @Result(property="user", column="userId", javaType= List.class, many=@Many(select="selectTasks"))
     })
     List<Task> findAllTask(@PathVariable String userName);
 
@@ -33,4 +33,11 @@ public interface UsersMapper {
             @Result(property="date", column = "date")
     })
     List<Task> selectTasks(String userId);
+
+    @Select("select * from user where username=#{username} and password=#{password}")
+    User login(User user);
+
+    @Insert("insert into task(subject,date) values(#{subject},#{date})")
+    @SelectKey(statement = "SELECT lAST_iNSERT_ID()", keyProperty = "id", before = false, resultType = Integer.class)
+    Task saveTask(Task task);
 }
